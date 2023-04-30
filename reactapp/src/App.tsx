@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 
-export default class App extends Component {
+interface IProps {
+}
+
+interface IState {
+    forecasts: any[];
+    loading: boolean;
+}
+
+export default class App extends Component<IProps, IState> {
     static displayName = App.name;
 
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.state = { forecasts: [], loading: true };
     }
@@ -12,7 +20,7 @@ export default class App extends Component {
         this.populateWeatherData();
     }
 
-    static renderForecastsTable(forecasts) {
+    static renderForecastsTable(forecasts: any[]) {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
