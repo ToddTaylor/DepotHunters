@@ -102,6 +102,10 @@ namespace data
                     .IsRequired();
                 entity.Property(entity => entity.ReportingMark)
                     .HasMaxLength(4);
+                entity.HasData(
+                    new Railroad { Id = 1, Name = "Milwaukee Road", ReportingMark = "MILW", CreatedBy = "SYSTEM", CreatedOn = DateTime.UtcNow },
+                    new Railroad { Id = 2, Name = "Soo Line", ReportingMark = "SOO", CreatedBy = "SYSTEM", CreatedOn = DateTime.UtcNow }
+                    );
             });
 
             OnModelCreatingPartial(modelBuilder);
