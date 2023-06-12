@@ -20,6 +20,19 @@ namespace data
         {
             modelBuilder.Entity<Depot>(entity =>
             {
+                entity.Property(e => e.PrecedingDepotId);
+                entity.Property(e => e.IsRazed);
+                entity.Property(e => e.IsRelocated);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsRequired();
+                entity.Property(e => e.Notes)
+                    .IsUnicode(false);
+                entity.Property(e => e.YearErected)
+                    .HasMaxLength(4);
+                entity.Property(e => e.YearRazed)
+                    .HasMaxLength(4);
+
                 entity.HasMany(d => d.Railroad)
                     .WithMany(p => p.Depot)
                     .UsingEntity<Dictionary<string, object>>(
@@ -36,11 +49,19 @@ namespace data
 
             modelBuilder.Entity<DepotLocation>(entity =>
             {
+                entity.Property(e => e.City)
+                    .HasMaxLength(50)
+                    .IsRequired();
+                entity.Property(e => e.County)
+                    .HasMaxLength(50)
+                    .IsRequired();
                 entity.Property(e => e.Latitude)
                     .HasColumnType("decimal(18, 0)");
-
                 entity.Property(e => e.Longitude)
                     .HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.State)
+                    .HasMaxLength(2)
+                    .IsRequired();
 
                 entity.HasOne(d => d.Depot)
                     .WithMany(p => p.DepotLocation)
@@ -51,18 +72,16 @@ namespace data
 
             modelBuilder.Entity<DepotPhoto>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Description).IsUnicode(false);
-
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.Description)
+                    .IsUnicode(false);
                 entity.Property(e => e.Photographer)
                     .IsRequired()
                     .HasMaxLength(50);
-
                 entity.Property(e => e.Url)
                     .IsRequired()
                     .HasMaxLength(250);
-
                 entity.Property(e => e.YearTaken)
                     .HasMaxLength(4)
                     .IsFixedLength();
@@ -76,9 +95,13 @@ namespace data
 
             modelBuilder.Entity<Railroad>(entity =>
             {
-                entity.Property(entity => entity.Id).ValueGeneratedOnAdd();
-                entity.Property(entity => entity.Name).HasMaxLength(75);
-                entity.Property(entity => entity.ReportingMark).HasMaxLength(4);
+                entity.Property(entity => entity.Id)
+                    .ValueGeneratedOnAdd();
+                entity.Property(entity => entity.Name)
+                    .HasMaxLength(75)
+                    .IsRequired();
+                entity.Property(entity => entity.ReportingMark)
+                    .HasMaxLength(4);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -8,7 +8,7 @@
         }
 
         public String Name { get; set; }
-        public String ReportingMark { get; set; }
+        public String? ReportingMark { get; set; }
 
         public virtual ICollection<Depot> Depot { get; set; }
     }
